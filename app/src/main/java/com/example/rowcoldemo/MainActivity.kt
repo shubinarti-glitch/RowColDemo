@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,6 +52,8 @@ fun RowColDemoScreen(modifier: Modifier = Modifier) {
         BasicRow()
         SectionTitle("Row arrangement variants")
         RowArrangementDemo()
+        SectionTitle("Nested Row + Column")
+        NestedDemo()
     }
 }
 
@@ -122,6 +127,42 @@ private fun Chip(text: String) {
             .padding(horizontal = 12.dp, vertical = 4.dp),
         color = Color.White
     )
+}
+
+/**
+ * Дизайн 4. Вложенные макеты: Row из двух Column.
+ * Каждая Column содержит несколько Text и имеет свой фон — видно границу колонок.
+ */
+@Composable
+fun NestedDemo(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(120.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .background(Color(0xFFEDE7F6))
+                .padding(8.dp),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Left top")
+            Text("Left middle")
+            Text("Left bottom")
+        }
+        Column(
+            modifier = Modifier
+                .background(Color(0xFFE0F2F1))
+                .padding(8.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text("Right 1")
+            Text("Right 2")
+            Text("Right 3")
+        }
+    }
 }
 
 @Preview(showSystemUi = true)
