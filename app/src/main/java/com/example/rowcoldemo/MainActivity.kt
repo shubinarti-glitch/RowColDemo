@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.rowcoldemo.ui.theme.RowColDemoTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +22,29 @@ class MainActivity : ComponentActivity() {
         setContent {
             RowColDemoTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    BasicColumn(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+/**
+ * Дизайн 1. Базовый Column: три текста расположены вертикально, сверху вниз.
+ */
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun BasicColumn(modifier: Modifier = Modifier) {
+    Column(modifier = modifier.padding(16.dp)) {
+        Text(text = "First item")
+        Text(text = "Second item")
+        Text(text = "Third item")
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+fun BasicColumnPreview() {
     RowColDemoTheme {
-        Greeting("Android")
+        BasicColumn()
     }
 }
