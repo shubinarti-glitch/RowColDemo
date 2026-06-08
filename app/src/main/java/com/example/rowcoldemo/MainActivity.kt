@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,6 +47,8 @@ fun RowColDemoScreen(modifier: Modifier = Modifier) {
         BasicColumn()
         SectionTitle("BasicRow")
         BasicRow()
+        SectionTitle("Row arrangement variants")
+        RowArrangementDemo()
     }
 }
 
@@ -76,6 +79,49 @@ fun BasicRow(modifier: Modifier = Modifier) {
         Text(text = "Row 2  ")
         Text(text = "Row 3")
     }
+}
+
+/**
+ * Дизайн 3. Row с разными значениями horizontalArrangement.
+ * Каждая строка fillMaxWidth и применяет свой arrangement к одинаковым 3 «чипам».
+ */
+@Composable
+fun RowArrangementDemo(modifier: Modifier = Modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        ArrangedRow("SpaceBetween", Arrangement.SpaceBetween)
+        ArrangedRow("SpaceAround", Arrangement.SpaceAround)
+        ArrangedRow("SpaceEvenly", Arrangement.SpaceEvenly)
+        ArrangedRow("Center", Arrangement.Center)
+        ArrangedRow("End", Arrangement.End)
+        ArrangedRow("spacedBy(16.dp)", Arrangement.spacedBy(16.dp))
+    }
+}
+
+@Composable
+private fun ArrangedRow(label: String, arrangement: Arrangement.Horizontal) {
+    Column {
+        Text(text = label, style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFF1F8E9))
+                .padding(4.dp),
+            horizontalArrangement = arrangement
+        ) {
+            Chip("A"); Chip("B"); Chip("C")
+        }
+    }
+}
+
+@Composable
+private fun Chip(text: String) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .background(Color(0xFF8BC34A))
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        color = Color.White
+    )
 }
 
 @Preview(showSystemUi = true)
