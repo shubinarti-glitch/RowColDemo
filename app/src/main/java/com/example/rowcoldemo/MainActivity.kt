@@ -54,6 +54,8 @@ fun RowColDemoScreen(modifier: Modifier = Modifier) {
         RowArrangementDemo()
         SectionTitle("Nested Row + Column")
         NestedDemo()
+        SectionTitle("Weight modifier (1 : 2 : 1)")
+        WeightDemo()
     }
 }
 
@@ -162,6 +164,47 @@ fun NestedDemo(modifier: Modifier = Modifier) {
             Text("Right 2")
             Text("Right 3")
         }
+    }
+}
+
+/**
+ * Дизайн 5. Modifier.weight: пропорциональное распределение свободного места.
+ * Три элемента с весами 1, 2, 1 — средний получает половину Row, крайние по четверти.
+ */
+@Composable
+fun WeightDemo(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(48.dp)
+    ) {
+        Text(
+            text = "1",
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+                .background(Color(0xFFEF5350))
+                .padding(8.dp),
+            color = Color.White
+        )
+        Text(
+            text = "2 (двойная ширина)",
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxSize()
+                .background(Color(0xFF42A5F5))
+                .padding(8.dp),
+            color = Color.White
+        )
+        Text(
+            text = "1",
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+                .background(Color(0xFF66BB6A))
+                .padding(8.dp),
+            color = Color.White
+        )
     }
 }
 
