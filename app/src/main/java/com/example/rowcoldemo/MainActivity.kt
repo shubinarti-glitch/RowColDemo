@@ -5,7 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -19,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,6 +60,9 @@ fun RowColDemoScreen(modifier: Modifier = Modifier) {
         NestedDemo()
         SectionTitle("Weight modifier (1 : 2 : 1)")
         WeightDemo()
+        SectionTitle("UserCard (Row + nested Column)")
+        UserCard(name = "Артемий Шубин", subtitle = "Студент СибГУ", initial = "А")
+        UserCard(name = "Николай Киреев", subtitle = "Преподаватель", initial = "Н")
     }
 }
 
@@ -204,6 +211,48 @@ fun WeightDemo(modifier: Modifier = Modifier) {
                 .background(Color(0xFF66BB6A))
                 .padding(8.dp),
             color = Color.White
+        )
+    }
+}
+
+/**
+ * Дизайн 6. Карточка пользователя — реальный UI-паттерн.
+ * Row с круглым «аватаром» (Box+CircleShape) + Column с двумя строками текста + Box-статус справа.
+ */
+@Composable
+fun UserCard(
+    name: String,
+    subtitle: String,
+    initial: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color(0xFFFFFFFF))
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFF673AB7)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = initial, color = Color.White, style = MaterialTheme.typography.titleMedium)
+        }
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = name, style = MaterialTheme.typography.bodyLarge)
+            Text(text = subtitle, style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+        }
+        Box(
+            modifier = Modifier
+                .size(12.dp)
+                .clip(CircleShape)
+                .background(Color(0xFF4CAF50))
         )
     }
 }
